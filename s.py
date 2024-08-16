@@ -19,6 +19,14 @@ head.penup()
 head.goto(0,0)
 head.direction="stop" #use to move the head
 
+#snake food
+food=turtle.Turtle()
+food.speed(0)
+food.shape("circle")
+food.color("red")
+food.penup()
+food.goto(0,1)
+
 #functions
 def goUp():
     head.direction="up"  #dont use ==, otherwise it can't move
