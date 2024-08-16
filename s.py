@@ -29,7 +29,19 @@ def goLeft():
 def goRight():
     pass
 def move():
-    pass
+    if head.direction=="up":
+        y=head.ycor()
+        head.sety(y+20)
+    if head.direction=="down":
+        y=head.ycor()
+        head.sety(y-20)
+    if head.direction=="left":
+        x=head.xcor()
+        head.setx(x+20)
+    if head.direction=="right":
+        head.setx(head.xcor()+20) #you can use like that
+
+
 
 
 # main game loop
