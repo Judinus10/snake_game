@@ -2,97 +2,116 @@ import turtle
 import time
 import random
 
-delay=0.1
+delay = 0.1
 
-# set up the screen 
+# Set up the screen 
 wn = turtle.Screen()
 wn.title("Snake Game")
 wn.bgcolor("green")
 wn.setup(width=600, height=600)
-wn.tracer(0) #this turns off the screen update
+wn.tracer(0)  # This turns off the screen updates
 
-#snake head
-head=turtle.Turtle()
+# Snake head
+head = turtle.Turtle()
 head.speed(0)
 head.shape("square")
 head.color("black")
 head.penup()
-head.goto(0,0)
-head.direction="stop" #use to move the head
+head.goto(0, 0)
+head.direction = "stop"  # Used to move the head
 
-#snake food
-food=turtle.Turtle()
+# Snake food
+food = turtle.Turtle()
 food.speed(0)
 food.shape("circle")
 food.color("red")
 food.penup()
-food.goto(0,1)
+food.goto(0, 100)
 
 segments = []
 
-#functions
+# Functions
 def goUp():
-    head.direction="up"  #dont use ==, otherwise it can't move
+    if head.direction != "down":  # Prevents the snake from going directly backward
+        head.direction = "up"
+
 def goDown():
-    head.direction="down"
+    if head.direction != "up":
+        head.direction = "down"
+
 def goLeft():
-    head.direction="left"
+    if head.direction != "right":
+        head.direction = "left"
+
 def goRight():
-    head.direction="right"
+    if head.direction != "left":
+        head.direction = "right"
+
 def move():
-    if head.direction=="up":
-        y=head.ycor()
-        head.sety(y+20)
-    if head.direction=="down":
-        y=head.ycor()
-        head.sety(y-20)
-    if head.direction=="left":
-        x=head.xcor()
-        head.setx(x-20)
-    if head.direction=="right":
-        head.setx(head.xcor()+20) #you can use like that
+    if head.direction == "up":
+        y = head.ycor()
+        head.sety(y + 20)
+    if head.direction == "down":
+        y = head.ycor()
+        head.sety(y - 20)
+    if head.direction == "left":
+        x = head.xcor()
+        head.setx(x - 20)
+    if head.direction == "right":
+        x = head.xcor()
+        head.setx(x + 20)
 
-# keyboard binding
+# Keyboard binding
 wn.listen()
-wn.onkeypress(goUp,"w")
-wn.onkeypress(goDown,"s")
-wn.onkeypress(goLeft,"a")
-wn.onkeypress(goRight,"d")
+wn.onkeypress(goUp, "w")
+wn.onkeypress(goDown, "s")
+wn.onkeypress(goLeft, "a")
+wn.onkeypress(goRight, "d")
 
-
-# main game loop
+# Main game loop
 while True:
     wn.update()
 
-    #chck for a collision with the food
-    if head.distance(food) <20:
-        #move food to random place
-        x=random.randint(-290,290)
-        y=random.randint(-290,290)
-        food.goto(x,y)
+    # Check for collision with the border
+    if head.xcor() > 290 or head.xcor() < -290 or head.ycor() > 290 or head.ycor() < -290:
+        time.sleep(1)
+        head.goto(0, 0)
+        head.direction = "stop"
 
-        # add a segment
-        newSegment=turtle.Turtle()
+        # Hide segments
+        for segment in segments:
+            segment.goto(1000, 1000)  # Move segments off-screen
+        segments.clear()  # Clear the segments list
+
+    # Check for collision with the food
+    if head.distance(food) < 20:
+        # Move food to a random spot
+        x = random.randint(-290, 290)
+        y = random.randint(-290, 290)
+        food.goto(x, y)
+
+        # Add a segment
+        newSegment = turtle.Turtle()
         newSegment.speed(0)
         newSegment.shape("square")
         newSegment.color("grey")
         newSegment.penup()
         segments.append(newSegment)
 
-    #move the end segment first in reverse order
-    for index in range(len(segments)-1,0,-1):
-        x=segments[index-1].xcor()
-        y=segments[index-1].ycor()
-        segments[index].goto(x,y)
+    # Move the end segments first in reverse order
+    for index in range(len(segments) - 1, 0, -1):
+        x = segments[index - 1].xcor()
+        y = segments[index - 1].ycor()
+        segments[index].goto(x, y)
 
-    #move segment 0 to where the head is 
-    if len(segments)>0:
-        x=head.xcor()
-        y=head.ycor()
-        segments[0].goto(x,y)
+    # Move segment 0 to where the head is
+    if len(segments) > 0:
+        x = head.xcor()
+        y = head.ycor()
+        segments[0].goto(x, y)
 
     move()
- 
+
     time.sleep(delay)
 
-wn.mainloop() #to keep window open
+wn.mainloop()  # To keep the window open
