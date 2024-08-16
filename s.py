@@ -28,6 +28,8 @@ food.color("red")
 food.penup()
 food.goto(0,1)
 
+segments = []
+
 #functions
 def goUp():
     head.direction="up"  #dont use ==, otherwise it can't move
@@ -62,11 +64,20 @@ wn.onkeypress(goRight,"d")
 while True:
     wn.update()
 
+    #chck for a collision with the food
     if head.distance(food) <20:
         #move food to random place
         x=random.randint(-290,290)
         y=random.randint(-290,290)
         food.goto(x,y)
+
+        # add a segment
+        newSegment=turtle.Turtle()
+        newSegment.speed(0)
+        newSegment.shape("square")
+        newSegment.color("grey")
+        newSegment.penup()
+        segments.append(newSegment)
     move()
  
     time.sleep(delay)
