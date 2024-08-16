@@ -78,10 +78,21 @@ while True:
         head.goto(0, 0)
         head.direction = "stop"
 
-        # Hide segments
-        for segment in segments:
-            segment.goto(1000, 1000)  # Move segments off-screen
-        segments.clear()  # Clear the segments list
+        # # Hide segments
+        # for segment in segments:
+        #     segment.goto(1000, 1000)  # Move segments off-screen
+        # segments.clear()  # Clear the segments list
+    
+    # Check for collision with the body
+    for segment in segments :
+        if segment.distance(head)<20:
+            time.sleep(1)
+            head.goto(0,0)
+            head.direction="stop"
+            # Hide segments
+            for segment in segments:
+                segment.goto(1000, 1000)  # Move segments off-screen
+            segments.clear()  # Clear the segments list
 
     # Check for collision with the food
     if head.distance(food) < 20:
