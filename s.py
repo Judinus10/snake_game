@@ -3,6 +3,8 @@ import time
 import random
 
 delay = 0.1
+score=0
+highScore=0
 
 # Set up the screen 
 wn = turtle.Screen()
@@ -88,10 +90,16 @@ while True:
         head.goto(0, 0)
         head.direction = "stop"
 
-        # # Hide segments
-        # for segment in segments:
-        #     segment.goto(1000, 1000)  # Move segments off-screen
-        # segments.clear()  # Clear the segments list
+        # Hide segments
+        for segment in segments:
+            segment.goto(1000, 1000)  # Move segments off-screen
+        segments.clear()  # Clear the segments list
+        
+        score=0 #reset the score
+
+        pen.clear()
+        pen.write("Score: {} High Score: {}".format(score,highScore), align="center", font=("courier",24,"normal"))
+
     
     # Check for collision with the body
     for segment in segments :
@@ -103,6 +111,12 @@ while True:
             for segment in segments:
                 segment.goto(1000, 1000)  # Move segments off-screen
             segments.clear()  # Clear the segments list
+            
+            score=0 #reset the score
+
+            pen.clear()
+            pen.write("Score: {} High Score: {}".format(score,highScore), align="center", font=("courier",24,"normal"))
+
 
     # Check for collision with the food
     if head.distance(food) < 20:
@@ -118,6 +132,14 @@ while True:
         newSegment.color("grey")
         newSegment.penup()
         segments.append(newSegment)
+
+        #Increase the score
+        score+=1
+
+        if score > highScore :
+            highScore=score
+        pen.clear()
+        pen.write("Score: {} High Score: {}".format(score,highScore), align="center", font=("courier",24,"normal"))
 
     # Move the end segments first in reverse order
     for index in range(len(segments) - 1, 0, -1):
