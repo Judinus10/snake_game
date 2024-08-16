@@ -78,6 +78,19 @@ while True:
         newSegment.color("grey")
         newSegment.penup()
         segments.append(newSegment)
+
+    #move the end segment first in reverse order
+    for index in range(len(segments)-1,0,-1):
+        x=segments[index-1].xcor()
+        y=segments[index-1].ycor()
+        segments[index].goto(x,y)
+
+    #move segment 0 to where the head is 
+    if len(segments)>0:
+        x=head.xcor()
+        y=head.ycor()
+        segments[0].goto(x,y)
+
     move()
  
     time.sleep(delay)
