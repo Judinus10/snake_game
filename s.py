@@ -1,4 +1,7 @@
 import turtle
+import time
+
+delay=0.1
 
 # set up the screen 
 wn = turtle.Screen()
@@ -14,10 +17,25 @@ head.shape("square")
 head.color("black")
 head.penup()
 head.goto(0,0)
-head.direction="stop"
+head.direction="stop" #use to move the head
+
+#functions
+def goUp():
+    pass
+def goDown():
+    pass
+def goLeft():
+    pass
+def goRight():
+    pass
+def move():
+    pass
+
 
 # main game loop
 while True:
     wn.update()
 
+    move()
+    time.sleep(delay)
 wn.mainloop() #to keep window open
