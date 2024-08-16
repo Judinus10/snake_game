@@ -21,13 +21,13 @@ head.direction="stop" #use to move the head
 
 #functions
 def goUp():
-    pass
+    head.direction="up"  #dont use ==, otherwise it can't move
 def goDown():
-    pass
+    head.direction="down"
 def goLeft():
-    pass
+    head.direction="left"
 def goRight():
-    pass
+    head.direction="right"
 def move():
     if head.direction=="up":
         y=head.ycor()
@@ -37,11 +37,16 @@ def move():
         head.sety(y-20)
     if head.direction=="left":
         x=head.xcor()
-        head.setx(x+20)
+        head.setx(x-20)
     if head.direction=="right":
         head.setx(head.xcor()+20) #you can use like that
 
-
+# keyboard binding
+wn.listen()
+wn.onkeypress(goUp,"w")
+wn.onkeypress(goDown,"s")
+wn.onkeypress(goLeft,"a")
+wn.onkeypress(goRight,"d")
 
 
 # main game loop
@@ -49,5 +54,7 @@ while True:
     wn.update()
 
     move()
+
     time.sleep(delay)
+
 wn.mainloop() #to keep window open
